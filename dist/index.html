@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111613">
+  <meta name="description" content="今夜，打得漂亮。为手机而生的德州扑克游戏，与三位各具风格的 AI 对手，随时开一局。">
+  <title>NIGHTSHIFT 午夜牌局 · 今夜，打得漂亮</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-spade" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 2C9 6 3 8.6 3 13a5 5 0 0 0 8 4c-.2 2-1 3.5-2 5h6c-1-1.5-1.8-3-2-5a5 5 0 0 0 8-4c0-4.4-6-7-9-11Z"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m9 3-.6 2.3-2 .9-2.2-.6-2 3.4 1.7 1.7v2.6L2.2 15l2 3.4 2.3-.6 2 .9L9 21h4l.6-2.3 2-.9 2.2.6 2-3.4-1.7-1.7v-2.6l1.7-1.7-2-3.4-2.3.6-2-.9L13 3Z"/><circle cx="11" cy="12" r="3"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="m11 5-6 4H2v6h3l6 4V5Z"/><path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-muted" viewBox="0 0 24 24"><path d="m11 5-6 4H2v6h3l6 4V5Zm5 4 6 6m0-6-6 6"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .7-1.5 1-1.5 2.5m0 3h.01"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="m12 3 0 4m0 10v4M3 12h4m10 0h4M5.7 5.7l2.8 2.8m7 7 2.8 2.8m0-12.6-2.8 2.8m-7 7-2.8 2.8"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2.6 7.4M3 5v6h6m3-4v5l3 2"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.6 7.4L22 12l-7.4 2.6L12 22l-2.6-7.4L2 12l7.4-2.6L12 2Z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-cards" viewBox="0 0 24 24"><rect x="8" y="4" width="12" height="16" rx="2"/><path d="M5 6 2 7l4 15 5-1m3-13v8m-3-4h6"/></symbol>
+    <symbol id="i-fold" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="m9 9 6 6m0-6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+  </defs></svg>
+
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="NIGHTSHIFT 午夜牌局首页">
+      <span class="brand-symbol"><svg class="icon"><use href="#i-spade"/></svg><span>✦</span></span>
+      <span class="brand-name">NIGHTSHIFT<span>午夜牌局</span></span>
+    </a>
+    <div class="header-motto">A GOOD NIGHT. A GREAT HAND.</div>
+    <nav class="header-actions" aria-label="游戏工具">
+      <button class="icon-button" id="sound-button" aria-label="开启音效" title="开启音效"><svg class="icon"><use href="#i-muted"/></svg></button>
+      <span class="nav-divider"></span>
+      <button class="text-button" id="rules-button"><svg class="icon"><use href="#i-help"/></svg><span>玩法指南</span></button>
+      <button class="icon-button" id="settings-button" aria-label="牌局设置" title="牌局设置"><svg class="icon"><use href="#i-settings"/></svg></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-heading">
+      <div><div class="eyebrow"><span></span> THE AFTER HOURS CLUB</div><h1>今夜，打得漂亮<span class="title-dot">。</span></h1><p>放松一点，好戏才刚刚开始。</p></div>
+      <div class="mode-group" aria-label="游戏模式"><button class="selected" id="classic-mode" aria-pressed="true"><svg class="icon"><use href="#i-spade"/></svg>经典牌局</button><button id="practice-mode" aria-pressed="false"><svg class="icon"><use href="#i-spark"/></svg>练习模式</button></div>
+    </section>
+
+    <div class="game-layout">
+      <section class="game-card" aria-label="德州扑克游戏牌桌">
+        <div class="table-toolbar"><div class="table-name"><span class="live-dot"></span>休闲桌 <span class="table-number">01</span><span class="table-tag">NO LIMIT</span></div><div class="table-details"><span>盲注 <b>10 / 20</b></span><span class="detail-separator"></span><span id="hand-number">第 01 手</span><button class="mobile-history icon-button" id="mobile-history" aria-label="查看战绩与牌局记录"><svg class="icon"><use href="#i-clock"/></svg></button></div></div>
+        <div class="table-surface" id="table-surface">
+          <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+          <div class="felt"><div class="felt-inner"></div><div class="felt-brand"><svg class="icon"><use href="#i-spade"/></svg><span>NIGHTSHIFT</span><small>MAKE YOUR OWN LUCK</small></div></div>
+          <div class="table-caption">TEXAS HOLD’EM <span>✦</span> GOOD VIBES ONLY</div>
+          <div id="seat-1" class="seat seat-left"></div>
+          <div id="seat-2" class="seat seat-top"></div>
+          <div id="seat-3" class="seat seat-right"></div>
+          <div class="community">
+            <div class="pot"><span class="pot-label">TOTAL POT <span>底池</span></span><div><svg class="icon"><use href="#i-chip"/></svg><strong id="pot-value">30</strong></div></div>
+            <div class="board" id="board" aria-label="公共牌"></div>
+            <div class="street-indicator" id="street-indicator"></div>
+          </div>
+          <div class="hero-seat" id="hero-seat"></div>
+          <span class="table-corner">♠</span>
+        </div>
+
+        <div class="action-panel" id="action-panel">
+          <div class="action-status"><div class="turn-label"><span class="status-light" id="status-light"></span><strong id="turn-title">正在发牌</strong><span id="turn-subtitle"></span></div><button id="skip-button" class="small-text-button" hidden>快进至结算 <span>→</span></button><div class="hand-type" id="hand-type"></div></div>
+          <div class="coach-line" id="coach-line" hidden></div>
+          <div class="bet-controls" id="bet-controls"><label class="bet-label" for="bet-slider">加注至 <output id="bet-output">40</output></label><input type="range" id="bet-slider" min="40" max="2500" step="10" value="40" aria-label="加注总金额"><div class="bet-presets"><button data-bet="half">½ 底池</button><button data-bet="pot">底池</button><button data-bet="all">全下</button></div></div>
+          <div class="action-buttons" id="action-buttons"><button class="action-button fold-button" id="fold-button"><svg class="icon"><use href="#i-fold"/></svg>弃牌</button><button class="action-button call-button" id="call-button"><svg class="icon"><use href="#i-check"/></svg><span>过牌</span></button><button class="action-button raise-button" id="raise-button"><svg class="icon"><use href="#i-plus"/></svg><span>加注</span><b id="raise-value">40</b><svg class="icon button-arrow"><use href="#i-arrow"/></svg></button></div>
+          <div class="result-actions" id="result-actions" hidden><button class="secondary-button" id="settlement-button">查看结算</button><button class="primary-button" id="next-button">再来一手<svg class="icon"><use href="#i-arrow"/></svg></button></div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <section class="side-card session-card"><div class="side-card-heading"><h2>今夜战绩</h2><svg class="icon moon-icon"><use href="#i-moon"/></svg></div><div class="stat-eyebrow">SESSION PROFIT <span>净赢筹码</span></div><div class="net-value" id="net-value">+0<span>CHIPS</span></div><svg class="sparkline" viewBox="0 0 230 30" aria-hidden="true"><path id="sparkline-path" d="M0 20H230"/></svg><div class="session-stats"><div><span>已玩手数</span><b id="hands-stat">00</b></div><div><span>获胜率</span><b id="wins-stat">—</b></div><div><span>最大赢池</span><b id="best-stat">—</b></div></div><div class="session-footer"><span class="live-dot"></span>你的下一手，值得期待。</div></section>
+        <section class="side-card opponents-card"><div class="side-card-heading"><h2>认识你的对手</h2><span class="tiny-label">THE REGULARS</span></div><div id="opponent-list"></div><p class="opponent-note"><svg class="icon"><use href="#i-shield"/></svg>AI 不会偷看你的底牌</p></section>
+        <section class="side-card log-card"><div class="side-card-heading"><h2>牌局实况</h2><span class="live-label"><span class="live-dot"></span>LIVE</span></div><div class="log-list" id="log-list" role="log" aria-live="off"></div><button class="full-history" id="history-button">查看完整记录<svg class="icon"><use href="#i-arrow"/></svg></button></section>
+      </aside>
+    </div>
+    <footer class="page-footer"><span><svg class="icon"><use href="#i-spade"/></svg>随时入座，尽兴而归。<i></i><span class="virtual-note">仅使用虚拟筹码</span></span><span class="footer-signature">STAY SHARP. PLAY YOUR HAND.</span></footer>
+  </main>
+
+  <dialog id="rules-dialog" class="modal"><div class="modal-header"><div><div class="eyebrow">A SEAT AT THE TABLE</div><h2>好牌，从懂规则开始。</h2></div><button class="icon-button" data-close aria-label="关闭玩法指南"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="modal-body"><p class="modal-intro">两张底牌，五张公共牌。从七张牌中选出最强的五张，或者让所有对手弃牌，就能赢下底池。</p><div class="rules-steps"><div><b>01</b><h3>拿到底牌</h3><p>每人 2 张私牌。小盲 10、大盲 20，庄家每手顺时针轮换。</p></div><div><b>02</b><h3>逐轮下注</h3><p>翻牌前 → 翻牌 3 张 → 转牌 1 张 → 河牌 1 张。每轮都可过牌、跟注、加注或弃牌。</p></div><div><b>03</b><h3>亮牌决胜</h3><p>牌型最高者赢。相同牌型比较点数和踢脚牌，完全相同时平分。</p></div></div><h3 class="rules-subhead">牌型，从大到小</h3><div class="hand-rankings"><div><b>01</b><span>皇家同花顺</span><i class="red">A♥ K♥ Q♥ J♥ 10♥</i></div><div><b>02</b><span>同花顺</span><i>9♠ 8♠ 7♠ 6♠ 5♠</i></div><div><b>03</b><span>四条</span><i>Q♠ Q♥ Q♣ Q♦ 8♠</i></div><div><b>04</b><span>葫芦</span><i>J♠ J♥ J♣ 7♦ 7♠</i></div><div><b>05</b><span>同花</span><i class="red">A♦ J♦ 8♦ 5♦ 2♦</i></div><div><b>06</b><span>顺子</span><i>8♠ 7♥ 6♣ 5♦ 4♠</i></div><div><b>07</b><span>三条</span><i>9♠ 9♥ 9♣ K♦ 3♠</i></div><div><b>08</b><span>两对</span><i>A♠ A♥ 6♣ 6♦ 3♠</i></div><div><b>09</b><span>一对</span><i>K♠ K♥ J♣ 8♦ 2♠</i></div><div><b>10</b><span>高牌</span><i>A♠ J♥ 9♣ 6♦ 3♠</i></div></div><div class="rules-tip"><svg class="icon"><use href="#i-spark"/></svg><p>筹码不够跟注时可以全下，系统会自动分配主池和边池。短码全下若未达到最小加注额，不会重新开放已行动玩家的加注权。A 也可组成 A-2-3-4-5 的最小顺子。</p></div><button class="primary-button wide" data-close>懂了，回牌桌<svg class="icon"><use href="#i-arrow"/></svg></button></div></dialog>
+
+  <dialog id="settings-dialog" class="modal settings-modal"><div class="modal-header"><div><div class="eyebrow">YOUR TABLE. YOUR RULES.</div><h2>找到你的节奏。</h2></div><button class="icon-button" data-close aria-label="关闭牌局设置"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="modal-body"><div class="setting-block"><h3>AI 难度</h3><p>所有难度下，对手都只能看见自己的牌。</p><div class="segmented" id="difficulty-options"><button data-difficulty="easy">轻松</button><button data-difficulty="normal">标准</button><button data-difficulty="hard">挑战</button></div></div><div class="setting-block"><h3>牌局节奏</h3><div class="segmented" id="pace-options"><button data-pace="relaxed">从容一点</button><button data-pace="quick">利落出牌</button></div></div><div class="toggle-row"><div><h3>牌桌音效</h3><p>让筹码声，为好牌助兴。</p></div><button class="switch" id="sound-switch" role="switch" aria-checked="false" aria-label="牌桌音效"></button></div><div class="toggle-row"><div><h3>练习模式</h3><p>显示估算胜率与下注提示。</p></div><button class="switch" id="practice-switch" role="switch" aria-checked="false" aria-label="练习模式"></button></div><div class="reset-section"><button class="reset-button" id="reset-button">重新开始一场牌局<svg class="icon"><use href="#i-clock"/></svg></button><p>每人重新获得 2,500 筹码，清空本次战绩。</p><div id="reset-confirm" hidden><span>准备好重新入座了吗？</span><button id="confirm-reset" class="primary-button">确认重新开始</button></div></div><p class="save-note" id="save-note">进度自动保存在当前浏览器，回来可继续玩。</p></div></dialog>
+
+  <dialog id="history-dialog" class="modal"><div class="modal-header"><div><div class="eyebrow">EVERY HAND TELLS A STORY</div><h2>今夜的牌桌故事。</h2></div><button class="icon-button" data-close aria-label="关闭牌局记录"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="modal-body"><div class="history-stats" id="history-stats"></div><h3 class="rules-subhead">最近结算</h3><div id="hand-history"></div><h3 class="rules-subhead">牌局记录</h3><div id="full-log" class="full-log"></div></div></dialog>
+
+  <dialog id="settlement-dialog" class="modal"><div class="modal-header"><div><div class="eyebrow">THE REVEAL</div><h2>这一手，尘埃落定。</h2></div><button class="icon-button" data-close aria-label="关闭结算"><svg class="icon"><use href="#i-close"/></svg></button></div><div class="modal-body" id="settlement-body"></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="screen-reader" id="game-announcement" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -32,5 +32,50 @@ Failure detection was checked with temporary mutations, then restored:
 - Appended `const = ;` to each of `dist/cards.js`, `dist/engine.js`, `dist/ai.js`, and `dist/app.js`, one file at a time: `npm run check:syntax` exited 1 with `SyntaxError` in every case.
 - After restoring each file, both commands passed again. No deliberate failures are committed.
 
-CI covers rules, simulations, and JavaScript parsing; the browser checks above remain manual.
+The original CI job covers rules, simulations, and JavaScript parsing. Browser automation is described below.
 This workflow reports status checks; requiring them before merge needs a separate branch protection or ruleset setting.
+
+
+## Browser smoke automation — 2026-10-21
+
+Playwright Test (pinned dev dependency, Chromium headless shell only) now runs
+against the local `npm start` static service. No deployment URL, login, or
+application credentials are required. The existing Node job is unchanged;
+a separate five-minute `Chromium browser smoke` job installs locked packages
+and Chromium, runs the tests, and uploads screenshots/traces on failure
+(retained seven days). Runtime dependencies and shipped game code are unchanged.
+
+Reproduce with Node.js 24 and Python available on PATH:
+
+```sh
+npm ci
+npx playwright install --with-deps --only-shell chromium
+npm test
+npm run check:syntax
+npm run test:browser
+```
+
+The suite has three cases:
+
+- Call using the actual button, verify progress and contributed chips, wait for
+  a player turn, reload, compare the entire saved session plus visible cards,
+  pot and hand number, then fold to prove the restored game remains playable.
+- At 1440×900 and 390×844: fold, use the real skip control to finish the bots,
+  inspect settlement, verify history and completed-hand statistics, and deal
+  the next hand. Verify the hand counter advances and action becomes available.
+
+Each test uses a fresh browser context and fixed random seed (42), keeping the
+real engine, AI, event handlers and timers. localStorage is read for assertions,
+never preloaded or edited by tests. Assertions wait on observable conditions;
+there are no fixed sleeps or automatic retries. Browser page errors fail tests.
+These are interaction checks, not screenshot comparisons or AI strength tests.
+
+Local verification: 18 rule/simulation tests and all four syntax checks passed;
+three browser cases passed in 11.7 seconds. Temporary fault injections each
+produced exit code 1 at the expected assertion: disabling the call handler,
+ignoring saved sessions, and disabling next-hand advancement. All mutations
+were restored; none are included in the change. The full clean suite is rerun
+before submission. The test runtime excludes initial browser downloads.
+
+The broader manual checks above (all-in variants, malformed/blocked storage,
+all listed viewport widths) are not claimed as automated coverage.

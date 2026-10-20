@@ -25,7 +25,8 @@ jobs:
 
   browser:
     name: Chromium browser smoke
-    runs-on: ubuntu-latest
+    # Pin the OS supported by the locked Playwright/browser build.
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4

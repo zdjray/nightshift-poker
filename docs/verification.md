@@ -41,7 +41,7 @@ This workflow reports status checks; requiring them before merge needs a separat
 Playwright Test (pinned dev dependency, Chromium headless shell only) now runs
 against the local `npm start` static service. No deployment URL, login, or
 application credentials are required. The existing Node job is unchanged;
-a separate five-minute `Chromium browser smoke` job installs locked packages
+a separate five-minute `Chromium browser smoke` job on pinned Ubuntu 24.04 installs locked packages
 and Chromium, runs the tests, and uploads screenshots/traces on failure
 (retained seven days). Runtime dependencies and shipped game code are unchanged.
 

@@ -3,5 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node --test tests/*.test.mjs", "check:syntax": "node --check dist/cards.js && node --check dist/engine.js && node --check dist/ai.js && node --check dist/app.js", "start": "python -m http.server 3000 --directory dist" }
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check:syntax": "node --check dist/cards.js && node --check dist/engine.js && node --check dist/ai.js && node --check dist/app.js",
+    "start": "python -m http.server 3000 --directory dist",
+    "test:browser": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
 }

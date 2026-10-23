@@ -15,7 +15,7 @@ A mobile-first, Chinese-language Texas Hold’em game. Open the deployed Site an
 
 ## Run locally
 
-Requires Node 18+ for tests and Python 3 for the static development server. No installation or runtime API credentials are needed.
+Requires Node 18+ for tests and Python 3 for the static development server. Playing locally requires no dependency installation or runtime API credentials.
 
 ```sh
 npm test
@@ -23,6 +23,22 @@ npm start
 ```
 
 Visit `http://localhost:3000`. Serve `dist/` with any static HTTP server for other hosting environments.
+
+## Verify locally
+
+Use Node.js 24 and Python available on PATH to match the current verification setup. Run from the repository root:
+
+```sh
+npm ci
+npx playwright install --with-deps --only-shell chromium
+npm test
+npm run check:syntax
+npm run test:browser
+```
+
+The browser suite runs three Chromium smoke tests against the local static server, covering player actions, reload recovery, and settlement/history/next-hand flows at desktop and mobile sizes. Playwright manages the server; no separate `npm start`, deployment login, or application credentials are needed.
+
+GitHub Actions runs on every push and pull request using Node.js 24, with separate `Node tests and syntax` and `Chromium browser smoke` checks. The commands above reproduce both checks locally. See [the verification record](docs/verification.md) for coverage details and the broader manual checks.
 
 ## Structure
 

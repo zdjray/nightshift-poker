@@ -102,7 +102,39 @@ test('many seeded games terminate with legal decisions and conserve all chips',(
   }
   assert.ok(decisions>500);
 });
-test('AI decisions are accepted by the real engine throughout a complete hand',()=>{
-  const rng=seeded(23);const s=createGame(rng);let guard=0;
-  while(s.stage!=='showdown') {assert.ok(guard++<100);const a=chooseAction(s,'easy',rng);act(s,a.type,a.amount);assert.equal(total(s),10000);}
-});
+function playAIHand(difficulty,seed){
+  const rng=seeded(seed),s=createGame(rng),decisions=[];
+  const context=`${difficulty}, seed ${seed}`;
+  assert.equal(total(s),10000,context);
+  while(s.stage!=='showdown'){
+    assert.ok(decisions.length<100,`${context}: hand did not terminate`);
+    const l=legalActions(s),a=chooseAction(s,difficulty,rng);
+    assert.ok(['fold','check','call','raise'].includes(a.type),`${context}: unknown action`);
+    if(a.type==='check')assert.equal(l.canCheck,true,context);
+    if(a.type==='call')assert.ok(l.toCall>0,`${context}: call without a bet`);
+    if(a.type==='raise'){
+      assert.equal(l.canRaise,true,context);
+      assert.ok(Number.isInteger(a.amount)&&a.amount>=l.minTo&&a.amount<=l.maxTo,`${context}: invalid raise`);
+    }
+    decisions.push({actor:s.actor,stage:s.stage,...a});
+    act(s,a.type,a.amount);
+    assert.equal(total(s),10000,context);
+    assert.ok(s.players.every(p=>Number.isInteger(p.chips)&&p.chips>=0),`${context}: invalid stack`);
+  }
+  assert.ok(decisions.length>0,`${context}: no AI decisions exercised`);
+  assert.equal(s.stage,'showdown',context);
+  assert.equal(s.actor,null,context);
+  assert.equal(s.pot,0,context);
+  return {decisions,state:s};
+}
+
+// Keep Monte Carlo work bounded: three hands per difficulty, each replayed once.
+for(const difficulty of ['easy','normal','hard']){
+  for(const seed of [23,219,427]){
+    test(`AI ${difficulty}, seed ${seed}: legal decisions, termination, chip conservation and reproducible replay`,()=>{
+      const first=playAIHand(difficulty,seed);
+      const replay=playAIHand(difficulty,seed);
+      assert.deepEqual(replay,first,'same seed must reproduce every decision and the settled state');
+    });
+  }
+}
